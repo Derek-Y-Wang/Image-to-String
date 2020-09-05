@@ -41,13 +41,14 @@ class LetterReader:
 
 
         # Step 5 - Output Layer
-        self.cnn.add(tf.keras.layers.Dense(units=4, activation="softmax"))
+        # currently we have 13 outputs -> 13 nodes
+        self.cnn.add(tf.keras.layers.Dense(units=13, activation="softmax"))
 
     def train(self):
         self.cnn.compile(optimizer=RMSprop(lr=0.01), loss='categorical_crossentropy',
                          metrics=['accuracy'])
         self.cnn.fit(x=self.training_set, validation_data=self.test_set,
-                     epochs=1)
+                     epochs=2)
 
     def save(self):
         self.cnn.save('model.h5')
