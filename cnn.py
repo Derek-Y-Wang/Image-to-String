@@ -47,7 +47,7 @@ class LetterReader:
         self.cnn.add(tf.keras.layers.Dense(units=13, activation="softmax"))
 
     def train(self):
-        self.cnn.compile(optimizer=RMSprop(lr=0.01), loss='categorical_crossentropy',
+        self.cnn.compile(optimizer='adam', loss='categorical_crossentropy',
                          metrics=['accuracy'])
         self.cnn.fit(x=self.training_set, validation_data=self.test_set,
                      epochs=2)
