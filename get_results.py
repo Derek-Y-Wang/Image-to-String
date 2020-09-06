@@ -4,13 +4,15 @@ import tensorflow as tf
 from keras.preprocessing import image
 import numpy as np
 
-IMAGE_PATH = "dataset/letters/single_prediction/paint_2.PNG"
+IMAGE_PATH = "dataset/letters/single_prediction/paint_3.PNG"
 
 index_map = {0: "1",
              1: "2",
              2: "3",
              3: "4",
+             4: "5",
              5: "6",
+             6: "7",
              7: "8",
              8: "9",
              9: "J",
@@ -34,15 +36,9 @@ def setup():
     # test_image = np.expand_dims(test_image, axis=0)
     # result = cnn.cnn.predict(test_image)
     # print(result)
-    # if result[0][0] == 1:
-    #     prediction = 'J'
-    # elif result[0][1] == 1:
-    #     prediction = 'K'
-    # elif result[0][2] == 1:
-    #     prediction = 'L'
-    # else:
-    #     prediction = 'M'
-    # print(prediction)
+    # for i in range(len(result[0])):
+    #     if result[0][i] == 1:
+    #         print(index_map[i])
 
 
 def load_results(model, image_path):
