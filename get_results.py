@@ -4,8 +4,6 @@ import tensorflow as tf
 from keras.preprocessing import image
 import numpy as np
 
-IMAGE_PATH = "dataset/letters/single_prediction/paint_3.PNG"
-
 index_map = {0: "1",
              1: "2",
              2: "3",
@@ -56,7 +54,15 @@ def load_results(model, image_path):
 
 
 if __name__ == "__main__":
-    # setup()
-    load_results('model.h5', IMAGE_PATH)
+    while True:
+        command = input("Type 'train' to train model or 'load' to get results: \n")
+        if command == "train":
+            setup()
+        elif command == "load":
+            IMAGE_PATH = "dataset/letters/single_prediction/"
+            pic = input("Name of image: \n")
+            IMAGE_PATH += pic
+            load_results('model.h5', IMAGE_PATH)
+        elif command == "quit":
+            break
 
-    # print(cnn.classify("dataset/letters/single_prediction/train_4b_00105.png"))

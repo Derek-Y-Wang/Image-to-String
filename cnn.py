@@ -37,6 +37,8 @@ class LetterReader:
         self.cnn.add(tf.keras.layers.Flatten())
 
         # Step 4 - Full Connection
+        self.cnn.add(tf.keras.layers.Dense(units=32, activation='relu'))
+
         self.cnn.add(tf.keras.layers.Dense(units=128, activation='relu'))
 
 
