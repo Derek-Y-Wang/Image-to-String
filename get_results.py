@@ -3,26 +3,12 @@ from image_preprocessor import ImageProcessor
 import tensorflow as tf
 from keras.preprocessing import image
 import numpy as np
+import os
 
-index_map = {0: "1",
-             1: "2",
-             2: "3",
-             3: "4",
-             4: "5",
-             5: "6",
-             6: "7",
-             7: "8",
-             8: "9",
-             9: "A",
-             10: "B",
-             11: "C",
-             12: "D",
-             13: "E",
-             14: "F",
-             15: "J",
-             16: "K",
-             17: "L",
-             18: "M"}
+files = os.listdir("dataset/letters/test_set/")
+index_map = dict()
+for i in range(len(os.listdir("dataset/letters/test_set/"))):
+    index_map[i] = files[i]
 
 
 def setup():
@@ -60,6 +46,7 @@ def load_results(model, image_path):
 
 
 if __name__ == "__main__":
+
     while True:
         command = input("Type 'train' to train model or 'load' to get results: \n")
         if command == "train":

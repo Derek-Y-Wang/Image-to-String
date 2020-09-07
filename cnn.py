@@ -1,5 +1,6 @@
 import tensorflow as tf
 import numpy as np
+import os
 
 
 class LetterReader:
@@ -30,7 +31,6 @@ class LetterReader:
                                             activation='relu'))
         self.cnn.add(tf.keras.layers.MaxPool2D(pool_size=3, strides=2))
 
-
         # Step 3 - Flattening
         self.cnn.add(tf.keras.layers.Flatten())
 
@@ -42,8 +42,10 @@ class LetterReader:
         self.cnn.add(tf.keras.layers.Dropout(0.2))
 
         # Step 5 - Output Layer
-        # currently we have 13 outputs -> 13 nodes
-        self.cnn.add(tf.keras.layers.Dense(units=19, activation="softmax"))
+        # no. of output nodes = no of datasets
+        self.cnn.add(tf.keras.layers.Dense(
+            units=len(os.listdir("dataset/letters/training_set/")),
+            activation="softmax"))
 
     def train(self):
         self.cnn.compile(optimizer="adam", loss='categorical_crossentropy',
@@ -53,6 +55,3 @@ class LetterReader:
 
     def save(self):
         self.cnn.save('model.h5')
-
-
-
