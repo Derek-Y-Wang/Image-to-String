@@ -1,7 +1,5 @@
 import tensorflow as tf
 import numpy as np
-from image_preprocessor import ImageProcessor
-from tensorflow.keras.optimizers import RMSprop
 
 
 class LetterReader:
@@ -28,29 +26,30 @@ class LetterReader:
         self.cnn.add(tf.keras.layers.MaxPool2D(pool_size=3, strides=2))
 
         # Adding a third convolutional layer
-        # self.cnn.add(tf.keras.layers.Conv2D(filters=64, kernel_size=3,
-        #                                     activation='relu'))
-        # self.cnn.add(tf.keras.layers.MaxPool2D(pool_size=3, strides=2))
+        self.cnn.add(tf.keras.layers.Conv2D(filters=16, kernel_size=3,
+                                            activation='relu'))
+        self.cnn.add(tf.keras.layers.MaxPool2D(pool_size=3, strides=2))
 
 
         # Step 3 - Flattening
         self.cnn.add(tf.keras.layers.Flatten())
 
         # Step 4 - Full Connection
-        self.cnn.add(tf.keras.layers.Dense(units=32, activation='relu'))
-
+        self.cnn.add(tf.keras.layers.Dense(units=64, activation='relu'))
         self.cnn.add(tf.keras.layers.Dense(units=128, activation='relu'))
 
+        # Lets add a dropout layer too
+        self.cnn.add(tf.keras.layers.Dropout(0.2))
 
         # Step 5 - Output Layer
         # currently we have 13 outputs -> 13 nodes
-        self.cnn.add(tf.keras.layers.Dense(units=13, activation="softmax"))
+        self.cnn.add(tf.keras.layers.Dense(units=19, activation="softmax"))
 
     def train(self):
-        self.cnn.compile(optimizer='adam', loss='categorical_crossentropy',
+        self.cnn.compile(optimizer="adam", loss='categorical_crossentropy',
                          metrics=['accuracy'])
         self.cnn.fit(x=self.training_set, validation_data=self.test_set,
-                     epochs=2)
+                     epochs=3)
 
     def save(self):
         self.cnn.save('model.h5')
