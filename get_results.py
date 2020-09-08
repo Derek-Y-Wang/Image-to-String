@@ -7,8 +7,8 @@ import os
 
 files = os.listdir("dataset/letters/test_set/")
 index_map = dict()
-for i in range(len(os.listdir("dataset/letters/test_set/"))):
-    index_map[i] = files[i]
+for n in range(len(os.listdir("dataset/letters/test_set/"))):
+    index_map[n] = files[n]
 
 
 def setup():
