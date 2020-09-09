@@ -2,8 +2,7 @@ import cv2
 import pytesseract
 
 pytesseract.pytesseract.tesseract_cmd = "./pytesseract\\Tesseract-OCR\\tesseract.exe"
-img = cv2.imread("dataset/letters/single_prediction/paint_BOOM7.PNG")
-img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+img = cv2.imread("dataset/letters/single_prediction/paint_BOOM7.PNG", cv2.IMREAD_GRAYSCALE)
 # print(pytesseract.image_to_string(img))
 
 ### Detecting Characters
@@ -19,7 +18,7 @@ for b in boxes.splitlines():
     # print(type(b))
     x, y, w, h = int(b[1]), int(b[2]), int(b[3]), int(b[4])
     cv2.rectangle(img, (x, hImg-y), (w, hImg-h), (0, 0, 255), 2)
-    ROI = img[x:hImg-y,  w:hImg-h]
+    ROI = img[w:hImg-h,  x:hImg-y]
     cv2.imwrite('./temp/ROI.png', ROI)
 
     # cv2.rectangle(img, (x, y), (x+w, y+h), (0, 0, 255), 2)
@@ -29,3 +28,6 @@ for b in boxes.splitlines():
 cv2.imshow('Result', img)
 # cv2.imshow("l", img[])
 cv2.waitKey(0)
+# class SeperateCharacters:
+#
+#     def __init__(self, ):
