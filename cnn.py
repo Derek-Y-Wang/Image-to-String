@@ -1,11 +1,12 @@
 import tensorflow as tf
 import numpy as np
 import os
+from keras.preprocessing import image
 
 
 class LetterReader:
 
-    def __init__(self, training_data, test_data):
+    def __init__(self, training_data=None, test_data=None):
         self.cnn = None
         self.training_set = training_data
         self.test_set = test_data
@@ -55,3 +56,17 @@ class LetterReader:
 
     def save(self):
         self.cnn.save('model.h5')
+
+    def load(self, model):
+        self.cnn = tf.keras.models.load_model(model)
+
+    def prediction(self, pic):
+        """
+        Takes the image and transforms it and return the one - hot encoding result
+        :param pic:
+        :return:
+        """
+        test_image = image.load_img(pic, target_size=(64, 64))
+        test_image = image.img_to_array(test_image)
+        test_image = np.expand_dims(test_image, axis=0)
+        return self.cnn.predict(test_image)
