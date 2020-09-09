@@ -65,7 +65,7 @@ if __name__ == "__main__":
             load_results('model.h5')
 
             # cleaning up the temp folder
-            split.purge_temp()
+            # split.purge_temp()
 
         elif command == "quit":
             break

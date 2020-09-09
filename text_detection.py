@@ -23,7 +23,7 @@ class BreakingWords:
             b[0] = letter_count
             letter_count += 1
             x, y, w, h = int(b[1]), int(b[2]), int(b[3]), int(b[4])
-            ROI = self.img[y-1:h+1, x-1:w+1]
+            ROI = self.img[y-5:h+5, x-5:w+5]
             cv2.imwrite('./temp/ROI_{}.png'.format(letter_count), ROI)
             letter_count += 1
 
@@ -34,9 +34,18 @@ class BreakingWords:
 
 
 
-l = BreakingWords("./dataset/letters/single_prediction/hello.PNG")
-l.purge_temp()
-l.get_binding_box_image()
+# l = BreakingWords("./dataset/letters/single_prediction/hello.png")
+# boxes = pytesseract.image_to_boxes(l.img)
+# for b in boxes.splitlines():
+#     b = b.split(' ')
+#     print(b)
+#     x, y, w, h = int(b[1]), int(b[2]), int(b[3]), int(b[4])
+#     rect = cv2.rectangle(l.img, (x-5, y-5), (w + 5,h + 5), (0, 255, 0), 2)
+#
+#     cv2.imshow("Rectangled", rect)
+# cv2.waitKey(0)
+# l.purge_temp()
+# l.get_binding_box_image()
 # l.purge_temp()
 
 
