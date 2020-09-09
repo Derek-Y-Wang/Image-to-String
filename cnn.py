@@ -52,7 +52,7 @@ class LetterReader:
         self.cnn.compile(optimizer="adam", loss='categorical_crossentropy',
                          metrics=['accuracy'])
         self.cnn.fit(x=self.training_set, validation_data=self.test_set,
-                     epochs=3)
+                     epochs=5)
 
     def save(self):
         self.cnn.save('model.h5')
