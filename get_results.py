@@ -23,7 +23,8 @@ def setup():
 
 def read_encoding(encoding, map):
     for i in range(len(encoding[0])):
-        if encoding[0][i] == 1:
+        if encoding[0][i] >= 0.9:
+            print(map[i])
             return map[i]
 
 
@@ -35,7 +36,11 @@ def load_results(model):
 
     for i in os.listdir("./temp"):
         encoding = cnn.prediction("./temp/"+i)
-        output += read_encoding(encoding, index_map)
+        print(encoding)
+        try:
+            output += read_encoding(encoding, index_map)
+        except TypeError:
+            print("Letter Skip Detected")
 
     print(output)
 

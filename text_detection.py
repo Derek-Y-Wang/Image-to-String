@@ -23,7 +23,7 @@ class BreakingWords:
             b[0] = letter_count
             letter_count += 1
             x, y, w, h = int(b[1]), int(b[2]), int(b[3]), int(b[4])
-            ROI = self.img[y:h, x:w]
+            ROI = self.img[y-1:h+1, x-1:w+1]
             cv2.imwrite('./temp/ROI_{}.png'.format(letter_count), ROI)
             letter_count += 1
 
@@ -34,6 +34,10 @@ class BreakingWords:
 
 
 
+l = BreakingWords("./dataset/letters/single_prediction/hello.PNG")
+l.purge_temp()
+l.get_binding_box_image()
+# l.purge_temp()
 
 
 
