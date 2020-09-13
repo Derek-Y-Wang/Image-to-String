@@ -1,23 +1,29 @@
 import cv2
 import pytesseract
 import os
-from cnn import LetterReader
-
+import matplotlib.pyplot as plt
 
 class BreakingWords:
 
     def __init__(self, image):
         try:
             pytesseract.pytesseract.tesseract_cmd = "./pytesseract\\Tesseract-OCR\\tesseract.exe"
-            self.img = cv2.imread(image, cv2.COLOR_BGR2RGB)
+            self.img = cv2.imread(image, cv2.COLOR_BGR2GRAY)
             self.temp = "./temp"
         except:
             print("Missing pytesseract")
 
+    def _process_image(self):
+        h, w, channel = self.img.shape
+        self.img = cv2.resize(self.img, dsize=(int(w * 1.5), int(h * 1.5)), interpolation=cv2.INTER_AREA)
+        return self.img
+
     def get_binding_box_image(self):
+        self._process_image()
         boxes = pytesseract.image_to_boxes(self.img)
         letter_count = 0
-
+        if boxes is None:
+            boxes = pytesseract.image_to_boxes(self.img, config="--psm 10")
         for b in boxes.splitlines():
             b = b.split(' ')
             b[0] = letter_count
@@ -30,11 +36,19 @@ class BreakingWords:
     def purge_temp(self):
         path = self.temp
         for item in os.listdir(path):
-            os.remove(path+"/"+item)
+            if item != "placeholder":
+                os.remove(path+"/"+item)
 
 
 
-# l = BreakingWords("./dataset/letters/single_prediction/hello.png")
+# img = cv2.imread("./dataset/letters/single_prediction/hello.png", cv2.COLOR_BGR2GRAY)
+# # print(img.size)
+# h, w, channel = img.shape
+# img = cv2.resize(img, dsize=(int(w * 0.4), int(h * 0.4)), interpolation=cv2.INTER_CUBIC)
+# plt.imshow(img)
+# plt.show()
+# l = BreakingWords("./dataset/letters/single_prediction/yo.png")
+# l._process_image()
 # boxes = pytesseract.image_to_boxes(l.img)
 # for b in boxes.splitlines():
 #     b = b.split(' ')
