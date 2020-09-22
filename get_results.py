@@ -22,8 +22,9 @@ def setup():
 
 
 def read_encoding(encoding, map):
+    # best = max(encoding)
     for i in range(len(encoding[0])):
-        if encoding[0][i] >= 0.9:
+        if encoding[0][i] >= 0.95:
             print(map[i])
             return map[i]
 
@@ -35,6 +36,8 @@ def load_results(model):
     output = "Word: "
 
     for i in os.listdir("./temp"):
+        if "./temp/"+i == './temp/placeholder':
+            continue
         encoding = cnn.prediction("./temp/"+i)
         print(encoding)
         try:
@@ -65,7 +68,7 @@ if __name__ == "__main__":
             load_results('model.h5')
 
             # cleaning up the temp folder
-            # split.purge_temp()
+            split.purge_temp()
 
         elif command == "quit":
             break

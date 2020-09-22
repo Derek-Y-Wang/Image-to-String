@@ -3,6 +3,7 @@ import pytesseract
 import os
 import matplotlib.pyplot as plt
 
+
 class BreakingWords:
 
     def __init__(self, image):
@@ -29,7 +30,11 @@ class BreakingWords:
             b[0] = letter_count
             letter_count += 1
             x, y, w, h = int(b[1]), int(b[2]), int(b[3]), int(b[4])
-            ROI = self.img[y-5:h+5, x-5:w+5]
+            if y-5 >= 0 and h+5 <= len(self.img) and x-5 >= 0 and w+5 <= len(self.img[0]):
+                ROI = self.img[y-5:h+5, x-5:w+5]
+            else:
+                ROI = self.img[y:h, x:w]
+            # ROI = self.img[y - 5:h + 5, x - 5:w + 5]
             cv2.imwrite('./temp/ROI_{}.png'.format(letter_count), ROI)
             letter_count += 1
 
@@ -41,26 +46,7 @@ class BreakingWords:
 
 
 
-# img = cv2.imread("./dataset/letters/single_prediction/hello.png", cv2.COLOR_BGR2GRAY)
-# # print(img.size)
-# h, w, channel = img.shape
-# img = cv2.resize(img, dsize=(int(w * 0.4), int(h * 0.4)), interpolation=cv2.INTER_CUBIC)
-# plt.imshow(img)
-# plt.show()
-# l = BreakingWords("./dataset/letters/single_prediction/yo.png")
-# l._process_image()
-# boxes = pytesseract.image_to_boxes(l.img)
-# for b in boxes.splitlines():
-#     b = b.split(' ')
-#     print(b)
-#     x, y, w, h = int(b[1]), int(b[2]), int(b[3]), int(b[4])
-#     rect = cv2.rectangle(l.img, (x-5, y-5), (w + 5,h + 5), (0, 255, 0), 2)
-#
-#     cv2.imshow("Rectangled", rect)
-# cv2.waitKey(0)
-# l.purge_temp()
-# l.get_binding_box_image()
-# l.purge_temp()
+
 
 
 
